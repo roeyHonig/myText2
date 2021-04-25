@@ -3,7 +3,7 @@
 int main()
 {
     int userChoice;
-    char roeyCharAray[60];
+    char *roeyBuffer = (char *)calloc(bufferbyteSize, sizeof(char));;
 
     present(userPromptForDataStructure);
     scanf("%d",&userChoice);
@@ -17,22 +17,16 @@ int main()
         {
             ch = getchar();
             if (ch != '\n') {
-                roeyCharAray[i] = ch;
+                *(roeyBuffer + i) = ch;
                 i++;
             }
         } while(ch != EOF); 
-
-        for (i = 0; i < 60; ++i)
-        {
-            printf("%c", roeyCharAray[i]);
-        } 
-        
+        printf("String = %s", roeyBuffer);
     } else if (userChoice == linkedList) {
 
     } else {
         printf("Non Valid Choice");
     }
-    //printf("%lu\n", sizeof(int));
     printf("\n");
     return 0;
 }
