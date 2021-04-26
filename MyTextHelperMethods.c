@@ -9,11 +9,9 @@ void present(int i) {
 
 int readText(int dataStructureType, void *dataStructure) {
     if (dataStructureType == buffer) {
-        // init the appropriate data structure
+        struct bufferDataStructure *bufferDS = (struct bufferDataStructure*)dataStructure;
         present(userPpromptForText);
-        char *roeyBuffer = (char*)dataStructure;
         char ch;
-        int j = 1;
         while (1) {
             int i = 0;
             do 
@@ -21,14 +19,15 @@ int readText(int dataStructureType, void *dataStructure) {
                 ch = getchar();
                 if (ch == EOF) 
                     goto endOfFunction;
-                if (ch != '\n') {
-                    *(roeyBuffer + i + (j-1)*bufferbyteSize) = ch;
+                if (ch != '\n') {                    
+                    *(bufferDS->currentBuffer + i + ((bufferDS->numOfReallocation) * (bufferDS->incrementBufferSizeInBytes))) = ch;
+                    
                     i++;
                 }
             } while(i < bufferbyteSize); 
-            j++;
-            roeyBuffer = (char *)realloc(roeyBuffer, bufferbyteSize * j);
-            if (roeyBuffer == NULL)
+            (bufferDS->numOfReallocation)++;
+            bufferDS->currentBuffer = (char *)realloc(bufferDS->currentBuffer, bufferDS->incrementBufferSizeInBytes * (bufferDS->numOfReallocation + 1));
+            if (bufferDS->currentBuffer == NULL)
                 return errorCodeMemoryReallocationFailed;
         }
     } else if (dataStructureType == linkedList) {
@@ -41,9 +40,10 @@ int readText(int dataStructureType, void *dataStructure) {
 }
 
 void printText(int dataStructureType, void *dataStructure) {
-    char *roeyBuffer = (char*)dataStructure;
     if (dataStructureType == buffer) {
-        printf("\nString = %s", roeyBuffer);
+        struct bufferDataStructure *bufferDS = (struct bufferDataStructure*)dataStructure;
+        printf("\nString = %s", bufferDS->currentBuffer);
+        printf("\nnumOfReallocation = %d", bufferDS->numOfReallocation);
     } else if (dataStructureType == linkedList) {
         
     } 
