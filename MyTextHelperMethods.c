@@ -6,3 +6,46 @@ void present(int i) {
     else if (i == userPpromptForText) 
         printf("Enter text: ");
 }
+
+int readText(int dataStructureType, void *dataStructure) {
+    if (dataStructureType == buffer) {
+        // init the appropriate data structure
+        present(userPpromptForText);
+        char *roeyBuffer = (char*)dataStructure;
+        char ch;
+        int j = 1;
+        while (1) {
+            int i = 0;
+            do 
+            {
+                ch = getchar();
+                if (ch == EOF) 
+                    goto endOfFunction;
+                if (ch != '\n') {
+                    *(roeyBuffer + i + (j-1)*bufferbyteSize) = ch;
+                    i++;
+                }
+            } while(i < bufferbyteSize); 
+            j++;
+            roeyBuffer = (char *)realloc(roeyBuffer, bufferbyteSize * j);
+            if (roeyBuffer == NULL)
+                return errorCodeMemoryReallocationFailed;
+        }
+    } else if (dataStructureType == linkedList) {
+        
+    } else {
+        return errorCodeUnknownDataStructure;
+    }
+    endOfFunction: 
+    return 0;
+}
+
+void printText(int dataStructureType, void *dataStructure) {
+    char *roeyBuffer = (char*)dataStructure;
+    if (dataStructureType == buffer) {
+        printf("\nString = %s", roeyBuffer);
+    } else if (dataStructureType == linkedList) {
+        
+    } 
+    return;
+}
