@@ -13,7 +13,6 @@ struct bufferNode *initBufferNodeAndLinkTo(struct bufferNode *previousNode) {
     bufferN->currentBuffer = (char*)calloc(bufferbyteSize, sizeof(char));
     bufferN->next = NULL;
     bufferN->previous = previousNode;
-    //previousNode->next = bufferN;
     return bufferN;
 }
 
@@ -25,10 +24,10 @@ void present(int i) {
 }
 
 int readText(int dataStructureType, void *dataStructure) {
+    present(userPpromptForText); 
+    char ch;
     if (dataStructureType == buffer) {
         struct bufferDataStructure *bufferDS = (struct bufferDataStructure*)dataStructure;
-        present(userPpromptForText);
-        char ch;
         while (1) {
             int i = 0;
             do 
@@ -49,8 +48,6 @@ int readText(int dataStructureType, void *dataStructure) {
     } else if (dataStructureType == linkedList) {
         struct bufferNode *bufferN = (struct bufferNode *)dataStructure;
         struct bufferNode *tempBufferN = bufferN;
-        present(userPpromptForText); // TOOD: maybe just put outside if
-        char ch; // TOOD: maybe just put outside if
         while (1) {
             int i = 0;
             do 
@@ -81,7 +78,6 @@ void printText(int dataStructureType, void *dataStructure) {
     if (dataStructureType == buffer) {
         struct bufferDataStructure *bufferDS = (struct bufferDataStructure*)dataStructure;
         printf("%s", bufferDS->currentBuffer);
-        //printf("\nnumOfReallocation = %d", bufferDS->numOfReallocation);
     } else if (dataStructureType == linkedList) {
         struct bufferNode *bufferN = (struct bufferNode *)dataStructure;
         struct bufferNode *nextBufferN = bufferN;
@@ -89,7 +85,7 @@ void printText(int dataStructureType, void *dataStructure) {
             bufferN = nextBufferN;
             nextBufferN = bufferN->next;
             printf("%s", bufferN->currentBuffer);
-        } while (nextBufferN != NULL); // TODO: just while (nextBufferN)
+        } while (nextBufferN); 
     } 
     printf("\n");
     return;
