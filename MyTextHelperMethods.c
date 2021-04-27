@@ -1,5 +1,12 @@
 #include "myText.h"
 
+/*
+ * Function:  initBufferDataStructure 
+ * --------------------
+ * Constructor method to initialize bufferDataStructure
+ * 
+ * returns: pointer to struct bufferDataStructure
+ */
 struct bufferDataStructure *initBufferDataStructure() {
     struct bufferDataStructure *bufferDS = (struct bufferDataStructure*) malloc(1 * sizeof(struct bufferDataStructure));
     bufferDS->currentBuffer = (char*)calloc(bufferbyteSize, sizeof(char));
@@ -8,6 +15,15 @@ struct bufferDataStructure *initBufferDataStructure() {
     return bufferDS;
 }
 
+/*
+ * Function:  initBufferNodeAndLinkTo 
+ * --------------------
+ * Constructor method to initialize bufferNode structure
+ * 
+ * previousNode: the bufferNode which our new structure pointer previous field will point to.
+ *
+ * returns: pointer to struct bufferNode
+ */
 struct bufferNode *initBufferNodeAndLinkTo(struct bufferNode *previousNode) {
     struct bufferNode *bufferN = (struct bufferNode*) malloc(1 * sizeof(struct bufferNode));
     bufferN->currentBuffer = (char*)calloc(bufferbyteSize, sizeof(char));
@@ -16,17 +32,36 @@ struct bufferNode *initBufferNodeAndLinkTo(struct bufferNode *previousNode) {
     return bufferN;
 }
 
+/*
+ * Function:  present 
+ * --------------------
+ * Present suitable user prompt 
+ * 
+ * i: integer representing diffrent prompts  
+ *
+ * returns: void
+ */
 void present(int i) {
     if (i == userPromptForDataStructure)
         printf("This program will temporariley save text input from the keyboard to a dynamic data structure and print it out to the screen in a 60 characters per line format.\nPlease choose the dynamic data structure you'd like to use (1 - buffer, 2 - linked list): ");
     else if (i == userPpromptForText) 
-        printf("Enter text: ");
+        printf("Enter text. To finish, press CTRL+d (linux) or CTRL+z (windows): ");
 }
 
+/*
+ * Function:  readText 
+ * --------------------
+ * Will prompt the user to enter text via the keyboard and will store the text in the choosen data structure 
+ * 
+ * dataStructureType: integer representing diffrent data types available for storying dynamic content   
+ * dataStructure: A pointer to the specific selected data structure   
+ *
+ * returns: int - 0 for No errors. or any other number for a specific error code
+ */
 int readText(int dataStructureType, void *dataStructure) {
-    present(userPpromptForText); 
     char ch;
     if (dataStructureType == buffer) {
+        present(userPpromptForText); 
         struct bufferDataStructure *bufferDS = (struct bufferDataStructure*)dataStructure;
         while (1) {
             int i = 0;
@@ -46,6 +81,7 @@ int readText(int dataStructureType, void *dataStructure) {
                 return errorCodeMemoryReallocationFailed;
         }
     } else if (dataStructureType == linkedList) {
+        present(userPpromptForText); 
         struct bufferNode *bufferN = (struct bufferNode *)dataStructure;
         struct bufferNode *tempBufferN = bufferN;
         while (1) {
@@ -73,6 +109,16 @@ int readText(int dataStructureType, void *dataStructure) {
     return 0;
 }
 
+/*
+ * Function:  printText 
+ * --------------------
+ * Will print the text stored inside the data structure 
+ * 
+ * dataStructureType: integer representing diffrent data types available for storying dynamic content   
+ * dataStructure: A pointer to the specific selected data structure   
+ *
+ * returns: void
+ */
 void printText(int dataStructureType, void *dataStructure) {
     printf("\n");
     if (dataStructureType == buffer) {
