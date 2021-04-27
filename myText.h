@@ -9,13 +9,20 @@
 #define errorCodeMemoryReallocationFailed  1
 #define errorCodeUnknownDataStructure  2
 
+struct bufferDataStructure *initBufferDataStructure();
+struct bufferNode *initBufferNodeAndLinkTo(struct bufferNode *previousNode);
 void present(int i);
 int readText(int dataStructureType, void *dataStructure);
 void printText(int dataStructureType, void *dataStructure);
-struct bufferDataStructure *initBufferDataStructure();
 
 struct bufferDataStructure {
     char *currentBuffer;
     int incrementBufferSizeInBytes;
     int numOfReallocation; 
+};
+
+struct bufferNode {
+    char *currentBuffer;
+    struct bufferNode *next;
+    struct bufferNode *previous; 
 };
