@@ -1,5 +1,13 @@
 #include "myText.h"
 
+struct bufferDataStructure *initBufferDataStructure() {
+    struct bufferDataStructure *bufferDS = (struct bufferDataStructure*) malloc(1 * sizeof(struct bufferDataStructure));
+    bufferDS->currentBuffer = (char*)calloc(bufferbyteSize, sizeof(char));
+    bufferDS->incrementBufferSizeInBytes = bufferbyteSize;
+    bufferDS->numOfReallocation = 0;
+    return bufferDS;
+}
+
 void present(int i) {
     if (i == userPromptForDataStructure)
         printf("This program will temporariley save text input from the keyboard to a dynamic data structure and print it out to the screen in a 60 characters per line format.\nPlease choose the dynamic data structure you'd like to use (1 - buffer, 2 - linked list): ");
@@ -47,5 +55,6 @@ void printText(int dataStructureType, void *dataStructure) {
     } else if (dataStructureType == linkedList) {
         
     } 
+    printf("\n");
     return;
 }

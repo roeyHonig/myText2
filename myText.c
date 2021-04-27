@@ -3,10 +3,7 @@
 
 int main()
 {
-    struct bufferDataStructure *bufferDS = (struct bufferDataStructure*) malloc(1 * sizeof(struct bufferDataStructure));
-    bufferDS->currentBuffer = (char*)calloc(bufferbyteSize, sizeof(char));
-    bufferDS->incrementBufferSizeInBytes = bufferbyteSize;
-    bufferDS->numOfReallocation = 0;
+    struct bufferDataStructure *bufferDS = initBufferDataStructure();
     int userChoice;
     present(userPromptForDataStructure);
     scanf("%d",&userChoice);
@@ -18,6 +15,5 @@ int main()
         // handle the error code. 
     }   
     free(bufferDS);
-    printf("\n");
     return 0;
 }
